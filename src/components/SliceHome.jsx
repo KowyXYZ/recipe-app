@@ -8,6 +8,8 @@ function SliceHomeBanana() {
     const [search, setSearch] = useState('banana')
 
 
+  const slicedData = recipe?.slice(0, 3)
+
     useEffect(() => {
         renderRecipe(search).then((data) => setRecipe(data.hits))
         console.log(recipe)
@@ -19,7 +21,7 @@ function SliceHomeBanana() {
       <div className='container text-start mx-auto flex flex-col justify-center items-start'>
         <p className='text-[32px] font-semibold'>Super Delicous Banana Recipes</p>
         <div className='flex gap-5 md:flex-row flex-col'>
-            {recipe.map((el, index) => {
+            {slicedData.map((el, index) => {
                 return (
                     <Card item={el} key={index}/>
                 )

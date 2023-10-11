@@ -36,7 +36,7 @@ function Recipe() {
             <img className='w-10 h-10 p-2  rounded-2xl border-2 object-contain cursor-pointer' src={srch} alt="search" onClick={handleSubmit}/>
         </div>
 
-        <div className='mt-14 flex gap-10 flex-wrap flex-row'>
+        <div className='mt-14 flex justify-center items-center gap-10 flex-wrap flex-row'>
           { recipe ? 
             recipe.map((el, index) => {
               return(

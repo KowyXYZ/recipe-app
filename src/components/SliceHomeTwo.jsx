@@ -6,6 +6,7 @@ function SliceHomeTwo() {
     const [recipe, setRecipe] = useState([])
 
     const [search, setSearch] = useState('strawberry')
+    const slicedData = recipe?.slice(0, 3)
 
 
     useEffect(() => {
@@ -19,7 +20,7 @@ function SliceHomeTwo() {
       <div className='container text-start mx-auto flex flex-col justify-center items-start'>
         <p className='text-[32px] font-semibold'>Super Delicous Banana Recipes</p>
         <div className='flex gap-5 md:flex-row flex-col'>
-            {recipe.map((el, index) => {
+            {slicedData.map((el, index) => {
                 return (
                     <Card item={el} key={index}/>
                 )
