@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import renderRecipe from '../utils/renderRecipe'
 import Card from './Card'
 
-function SliceHomeBanana() {
+function SliceHomeTwo() {
     const [recipe, setRecipe] = useState([])
 
-    const [search, setSearch] = useState('banana')
+    const [search, setSearch] = useState('strawberry')
 
 
     useEffect(() => {
@@ -30,4 +30,4 @@ function SliceHomeBanana() {
   )
 }
 
-export default SliceHomeBanana
+export default SliceHomeTwo

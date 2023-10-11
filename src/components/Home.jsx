@@ -2,6 +2,7 @@ import React from 'react'
 
 import cheesecake from '../assets/cheesecake.jpg'
 import SliceHome from './SliceHome'
+import SliceHomeTwo from './SliceHomeTwo'
 
 
 function Home() {
@@ -17,6 +18,7 @@ function Home() {
       </div>
 
       <SliceHome/>
+      <SliceHomeTwo/>
     </div>
   )
 }
