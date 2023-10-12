@@ -17,6 +17,8 @@ function Recipe() {
 
     }, [])
 
+  
+
     const handleSubmit = async () => {
 
         if(textBox === '') {
@@ -24,7 +26,9 @@ function Recipe() {
         } 
 
         renderRecipe(textBox).then((data) => setRecipe(data.hits))
+
         console.log(recipe)
+
     }
 
     
@@ -32,15 +36,18 @@ function Recipe() {
     <div className='w-full py-6'>
       <div className='container mx-auto flex flex-col justify-center items-center'>
         <div className='gap-2 flex items-center justify-center'>
-            <input className='border-2 rounded-2xl p-2 outline-none' type="text"  onChange={(e) => setTextBox(e.target.value)} placeholder='Search. . . '/>
+            <input className='border-2 rounded-2xl p-2 outline-none w-[250px]' type="text"  onChange={(e) => setTextBox(e.target.value)} placeholder='Search. . . '/>
             <img className='w-10 h-10 p-2  rounded-2xl border-2 object-contain cursor-pointer' src={srch} alt="search" onClick={handleSubmit}/>
         </div>
 
-        <div className='mt-14 flex justify-center items-center gap-10 flex-wrap flex-row'>
+
+      
+
+        <div className='mt-4 flex justify-center items-center gap-10 flex-wrap flex-row'>
           { recipe ? 
             recipe.map((el, index) => {
               return(
-                <Card item={el} index={index}/>
+                <Card item={el} key={index} />
               )
             }) : <p>Loading...</p>
           }
