@@ -22,21 +22,25 @@ function SingleRecipe() {
     // }
 
     function NutrientList({ nutrients }) {
-      <div>
-        {Object.keys(nutrients).map((nutrientKey, key) => {
-          const nutrient = nutrients[nutrientKey]
-          console.log(nutrient)
-          return(
-            <div key={key}>
-              <p key={key}>{nutrient ? nutrient.label : <p>...</p>}</p>
-              <p key={key}>{nutrient}</p>
-              <p key={key}>{nutrient.unit}</p>
-           
-            </div>
-          )
-        })}
-      </div>
+      return (
+        <div>
+          {Object.keys(nutrients).map((nutrientKey, key) => {
+            const nutrient = nutrients[nutrientKey];
+            console.log(nutrient);
+            return (
+              <div className='flex gap-2 p-1  space-y-2 items-center justify-start' key={key}>
+                <p className='font-semibold' key={key}>{nutrient ? nutrient.label : <p>...</p>}</p>
+                <p key={key}>{nutrient ? Math.round(nutrient.quantity) : <p>...</p>}</p>
+                <p key={key}>{nutrient ? nutrient.unit : <p>...</p>}</p>
+              </div>
+            );
+          })}
+        </div>
+      );
     }
+
+    
+
 
 
 
@@ -56,16 +60,26 @@ function SingleRecipe() {
           <img className='w-96 object-contain' src={loader?.hits[0].recipe?.image} alt="current_img_of_recipe" />
         </div>
         
-         <div className='mt-10 flex items-center justify-between'>
-          <div className='flex justify-start items-start  gap-4'>
-            <p className='text-[gray]'>dietLabe: <span className='text-[orange]'>{loader?.hits[0].recipe?.dietLabels[0]} </span>|</p>
-            <p className='text-[gray]'>dishType: <span className='text-[orange]'>{loader?.hits[0].recipe?.dishType[0]}</span> |</p>
-            <p className='text-[gray]'>mealType: <span className='text-[orange]'>{loader?.hits[0].recipe?.mealType[0]}</span>  |</p>
+         <div className='mt-10 flex items-start justify-between'>
+          <div className='flex flex-col space-y-12'>
+            <div className='flex justify-start items-start  gap-4'>
+              <p className='text-[gray]'>dietLabe: <span className='text-[orange]'>{loader?.hits[0].recipe?.dietLabels[0]} </span>|</p>
+              <p className='text-[gray]'>dishType: <span className='text-[orange]'>{loader?.hits[0].recipe?.dishType[0]}</span> |</p>
+              <p className='text-[gray]'>mealType: <span className='text-[orange]'>{loader?.hits[0].recipe?.mealType[0]}</span>  |</p>
+            </div>
+
+            <div>
+              <p className='text-[20px] font-black'>Ingredients</p>
+            </div>
+      
+
           </div>
 
-          <div>
+        
+
+          <div className='flex flex-col gap-2'>
             <p className='text-[20px] font-black'>Nutrition Facts</p>
-            <div className=''>
+            <div className='border-2 rounded-3xl p-2 flex items-center justify-center'>
               <NutrientList nutrients={totalNutrients}/>
               
             </div>
