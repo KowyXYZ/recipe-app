@@ -8,7 +8,7 @@ function Recipe() {
 
     const [recipe, setRecipe] = useState([])
 
-    const [search, setSearch] = useState('chicken')
+    const [search, setSearch] = useState('banana')
 
     const [textBox, setTextBox] = useState('')
 
