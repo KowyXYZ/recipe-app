@@ -28,11 +28,11 @@ function SingleRecipe() {
           console.log(nutrient)
           return(
             <div key={key}>
-              <p key={key}>{nutrient.label}</p>
-              <p key={key}>{nutrient.quantity}</p>
+              <p key={key}>{nutrient ? nutrient.label : <p>...</p>}</p>
+              <p key={key}>{nutrient}</p>
               <p key={key}>{nutrient.unit}</p>
            
-              </div>
+            </div>
           )
         })}
       </div>
