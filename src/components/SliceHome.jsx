@@ -18,7 +18,7 @@ function SliceHomeBanana() {
 
   return (
     <div className='w-full py-16'>
-      <div className='container text-start mx-auto flex flex-col justify-center items-start'>
+      <div className='container sm:text-start text-center mx-auto flex flex-col justify-center items-center sm:items-start'>
         <p className='text-[32px] font-semibold'>Super Delicous Banana Recipes</p>
         <div className='flex gap-5 md:flex-row flex-col'>
             {slicedData.map((el, index) => {

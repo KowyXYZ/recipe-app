@@ -17,7 +17,7 @@ function SingleRecipe() {
 
     const [reciper, setReciper] = useState([])
 
-    const slicedData = reciper?.slice(10, 12)
+    const slicedData = reciper?.slice(10, 14)
     console.log(loader)
 
     useEffect(() => {
@@ -45,7 +45,7 @@ function SingleRecipe() {
             const nutrient = nutrients[nutrientKey];
 
             return (
-              <div className='flex gap-3 p-1 text-[20px]  items-center justify-start' >
+              <div className='flex gap-3 p-1 text-[20px]  items-center justify-center sm:justify-start' >
                 <p className='font-semibold' >{nutrient ? nutrient.label : <p>...</p>}</p>
                 <p >{nutrient ? Math.round(nutrient.quantity) : <p>...</p>}</p>
                 <p >{nutrient ? nutrient.unit : <p>...</p>}</p>
@@ -78,26 +78,27 @@ function SingleRecipe() {
       <div className='container mx-auto flex flex-col'>
 
         <div className='flex flex-col justify-center items-center space-y-4'>
-           <p className='text-[36px] font-semibold'>{loader?.hits[0].recipe?.label}</p>
-           <div className='gap-2 flex flex-wrap w-[500px] items-center justify-center text-[14px]'>{loader?.hits[0].recipe?.healthLabels.map((el, index) => {
+           <p className='text-[36px] font-black'>{loader?.hits[0].recipe?.label}</p>
+           
+          <img className='sm:w-1/3 rounded-2xl object-contain' src={loader?.hits[0].recipe?.image} alt="current_img_of_recipe" />
+          <div className='gap-2 flex flex-wrap w-[300px] sm:w-[500px] items-center justify-center text-[14px]'>{loader?.hits[0].recipe?.healthLabels.map((el, index) => {
             return (
               <p key={index}>
                 #{el}
               </p>
             )
            })}</div>
-          <img className='w-1/3 h-1/3 rounded-2xl object-contain' src={loader?.hits[0].recipe?.image} alt="current_img_of_recipe" />
         </div>
         
-         <div className='mt-12 flex sm:flex-row flex-col items-start justify-between'>
-          <div className='flex flex-col space-y-12'>
-            <div className='flex justify-start items-start  gap-4'>
+         <div className='mt-12 flex sm:flex-row flex-col-reverse sm:items-start justify-between'>
+          <div className='flex sm:flex-col flex-col space-y-12'>
+            <div className='flex sm:justify-start sm:items-start justify-center items-center mt-2 flex-col sm:flex-row  gap-4'>
               <p className='text-[gray]'>dietLabe: <span className='text-[orange]'>{loader?.hits[0].recipe?.dietLabels[0]} </span>|</p>
               <p className='text-[gray]'>dishType: <span className='text-[orange]'>{loader?.hits[0].recipe?.dishType[0]}</span> |</p>
               <p className='text-[gray]'>mealType: <span className='text-[orange]'>{loader?.hits[0].recipe?.mealType[0]}</span>  |</p>
             </div>
 
-            <div>
+            <div className='flex justify-center items-center sm:items-start flex-col'>
               <p className='text-[24px] font-black'>Ingredients</p>
               <div>
                 <IngList Ingredients={totalIngredients}/>
@@ -105,9 +106,9 @@ function SingleRecipe() {
               <p className='mt-12 text-[20px] text-[gray]'>Total time to prepare: <span className='text-[red]'>{loader?.hits[0].recipe?.totalTime}min</span></p>
             </div>
 
-            <div>
+            <div className='flex justify-center items-center flex-col'>
               <p className='text-[24px] font-black'>More Recipes</p>
-              <div className='flex gap-5 items-start justify-start flex-col'>
+              <div className='flex gap-5 sm:items-start items-center sm:justify-start justify-center flex-wrap'>
                 {slicedData.map((el, index) => {
                     return (
                         <Card item={el} key={index}/>
@@ -121,7 +122,7 @@ function SingleRecipe() {
 
         
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 justify-center items-center'>
             <p className='text-[24px] font-black'>Nutrition Facts</p>
             <div className='border-2 rounded-3xl p-2 flex items-center justify-center'>
               <NutrientList nutrients={totalNutrients}/>

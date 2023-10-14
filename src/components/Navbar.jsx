@@ -8,7 +8,7 @@ function Navbar() {
   const [toggle, setToggle] = useState(false)
   return (
     <nav className='w-full py-6'>
-      <div className='container mx-auto flex justify-between items-center'>
+      <div className='container mx-auto flex justify-around sm:justify-between items-center'>
         <Link to='/'>
             <img className='sm:w-32 w-24 object-contain' src={logo} alt="logo" />
         </Link>
