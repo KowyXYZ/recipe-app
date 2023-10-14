@@ -1,5 +1,9 @@
 import React from 'react'
 import { useLoaderData, useParams } from 'react-router-dom'
+import Checkbox from 'antd/es/checkbox/Checkbox'
+import { useEffect, useState } from 'react'
+import renderRecipe from '../utils/renderRecipe'
+import Card from './Card'
 
 function SingleRecipe() {
 
@@ -7,10 +11,23 @@ function SingleRecipe() {
 
     const loader  = useLoaderData()
 
+    const [search, setSearch] = useState('strawberry')
+
+
+
+    const [reciper, setReciper] = useState([])
+
+    const slicedData = reciper?.slice(10, 12)
     console.log(loader)
 
+    useEffect(() => {
+        renderRecipe(search).then((data) => setReciper(data.hits))
+      }, [])
+  
 
     const totalNutrients = loader?.hits[0].recipe?.totalNutrients
+    const totalIngredients = loader?.hits[0].recipe?.ingredientLines
+
 
     // for(const nutrientKey in totalNutrients) {
     //   if(totalNutrients.hasOwnProperty(nutrientKey)) {
@@ -26,17 +43,29 @@ function SingleRecipe() {
         <div>
           {Object.keys(nutrients).map((nutrientKey, key) => {
             const nutrient = nutrients[nutrientKey];
-            console.log(nutrient);
+
             return (
-              <div className='flex gap-2 p-1  space-y-2 items-center justify-start' key={key}>
-                <p className='font-semibold' key={key}>{nutrient ? nutrient.label : <p>...</p>}</p>
-                <p key={key}>{nutrient ? Math.round(nutrient.quantity) : <p>...</p>}</p>
-                <p key={key}>{nutrient ? nutrient.unit : <p>...</p>}</p>
+              <div className='flex gap-3 p-1 text-[20px]  items-center justify-start' >
+                <p className='font-semibold' >{nutrient ? nutrient.label : <p>...</p>}</p>
+                <p >{nutrient ? Math.round(nutrient.quantity) : <p>...</p>}</p>
+                <p >{nutrient ? nutrient.unit : <p>...</p>}</p>
               </div>
             );
           })}
         </div>
       );
+    }
+
+    function IngList({Ingredients}){
+      return(
+        <div className='flex flex-col gap-4 mt-2'>
+          {Ingredients.map((ingKey) => {
+            return(
+              <Checkbox className='text-[22px]'>{ingKey}</Checkbox>
+            )
+          })}
+        </div>
+      )
     }
 
     
@@ -46,21 +75,21 @@ function SingleRecipe() {
 
   return (
     <div className='w-full py-10'>
-      <div className='container mx-auto '>
+      <div className='container mx-auto flex flex-col'>
 
         <div className='flex flex-col justify-center items-center space-y-4'>
-           <p className='text-[28px] font-semibold'>{loader?.hits[0].recipe?.label}</p>
-           <div className='gap-2 flex flex-wrap items-center justify-center text-[14px]'>{loader?.hits[0].recipe?.healthLabels.map((el, index) => {
+           <p className='text-[36px] font-semibold'>{loader?.hits[0].recipe?.label}</p>
+           <div className='gap-2 flex flex-wrap w-[500px] items-center justify-center text-[14px]'>{loader?.hits[0].recipe?.healthLabels.map((el, index) => {
             return (
               <p key={index}>
                 #{el}
               </p>
             )
            })}</div>
-          <img className='w-96 object-contain' src={loader?.hits[0].recipe?.image} alt="current_img_of_recipe" />
+          <img className='w-1/3 h-1/3 rounded-2xl object-contain' src={loader?.hits[0].recipe?.image} alt="current_img_of_recipe" />
         </div>
         
-         <div className='mt-10 flex items-start justify-between'>
+         <div className='mt-12 flex sm:flex-row flex-col items-start justify-between'>
           <div className='flex flex-col space-y-12'>
             <div className='flex justify-start items-start  gap-4'>
               <p className='text-[gray]'>dietLabe: <span className='text-[orange]'>{loader?.hits[0].recipe?.dietLabels[0]} </span>|</p>
@@ -69,7 +98,22 @@ function SingleRecipe() {
             </div>
 
             <div>
-              <p className='text-[20px] font-black'>Ingredients</p>
+              <p className='text-[24px] font-black'>Ingredients</p>
+              <div>
+                <IngList Ingredients={totalIngredients}/>
+              </div>
+              <p className='mt-12 text-[20px] text-[gray]'>Total time to prepare: <span className='text-[red]'>{loader?.hits[0].recipe?.totalTime}min</span></p>
+            </div>
+
+            <div>
+              <p className='text-[24px] font-black'>More Recipes</p>
+              <div className='flex gap-5 items-start justify-start flex-col'>
+                {slicedData.map((el, index) => {
+                    return (
+                        <Card item={el} key={index}/>
+                    )
+                  })}
+            </div>
             </div>
       
 
@@ -78,7 +122,7 @@ function SingleRecipe() {
         
 
           <div className='flex flex-col gap-2'>
-            <p className='text-[20px] font-black'>Nutrition Facts</p>
+            <p className='text-[24px] font-black'>Nutrition Facts</p>
             <div className='border-2 rounded-3xl p-2 flex items-center justify-center'>
               <NutrientList nutrients={totalNutrients}/>
               
