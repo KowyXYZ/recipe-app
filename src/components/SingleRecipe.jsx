@@ -16,27 +16,43 @@ function SingleRecipe() {
 
 
     const [reciper, setReciper] = useState([])
-
+    console.log(reciper)
     const slicedData = reciper?.slice(10, 14)
     console.log(loader)
 
     useEffect(() => {
         renderRecipe(search).then((data) => setReciper(data.hits))
       }, [])
+
+      
+    const [randomRecipes, setRandomRecipes] = useState([])
+
+    useEffect(() => {
+      if (reciper.length > 0) {
+        const randomRecipes = getRandomRecipe(reciper, 6);
+        setRandomRecipes(randomRecipes);
+      }
+    }, [reciper]);
+
+    function getRandomRecipe(recipe, count) {
+      const randomRecipes = [];
+      while (randomRecipes.length < count) {
+        const randomIndex = Math.floor(Math.random() * recipe.length);
+        const randomRecipe = recipe[randomIndex];
+        if (!randomRecipes.includes(randomRecipe)) {
+          randomRecipes.push(randomRecipe);
+        }
+      }
+      return randomRecipes;
+    }
+    
   
 
     const totalNutrients = loader?.hits[0].recipe?.totalNutrients
     const totalIngredients = loader?.hits[0].recipe?.ingredientLines
 
 
-    // for(const nutrientKey in totalNutrients) {
-    //   if(totalNutrients.hasOwnProperty(nutrientKey)) {
-    //     const nutrient = totalNutrients[nutrientKey]
-    //     const {label, quantity, unit} = nutrient
-    //     console.log( label + '' + Math.round(quantity) + '' + unit)
 
-    //   }
-    // }
 
     function NutrientList({ nutrients }) {
       return (
@@ -78,7 +94,7 @@ function SingleRecipe() {
       <div className='container mx-auto flex flex-col'>
 
         <div className='flex flex-col justify-center items-center space-y-4'>
-           <p className='text-[36px] font-black'>{loader?.hits[0].recipe?.label}</p>
+           <p className='sm:text-[36px] text-[24px] font-black'>{loader?.hits[0].recipe?.label}</p>
            
           <img className='sm:w-1/3 rounded-2xl object-contain' src={loader?.hits[0].recipe?.image} alt="current_img_of_recipe" />
           <div className='gap-2 flex flex-wrap w-[300px] sm:w-[500px] items-center justify-center text-[14px]'>{loader?.hits[0].recipe?.healthLabels.map((el, index) => {
@@ -100,7 +116,7 @@ function SingleRecipe() {
 
             <div className='flex justify-center items-center sm:items-start flex-col'>
               <p className='text-[24px] font-black'>Ingredients</p>
-              <div>
+              <div className='p-4'>
                 <IngList Ingredients={totalIngredients}/>
               </div>
               <p className='mt-12 text-[20px] text-[gray]'>Total time to prepare: <span className='text-[red]'>{loader?.hits[0].recipe?.totalTime}min</span></p>
@@ -109,11 +125,11 @@ function SingleRecipe() {
             <div className='flex justify-center items-center flex-col'>
               <p className='text-[24px] font-black'>More Recipes</p>
               <div className='flex gap-5 sm:items-start items-center sm:justify-start justify-center flex-wrap'>
-                {slicedData.map((el, index) => {
-                    return (
-                        <Card item={el} key={index}/>
-                    )
-                  })}
+              {randomRecipes.map((el, index) => {
+              return(
+                <Card item={el} key={index}/> 
+              )
+            })}
             </div>
             </div>
       
@@ -129,6 +145,8 @@ function SingleRecipe() {
               
             </div>
           </div>
+
+          
          </div>
       </div>
      
